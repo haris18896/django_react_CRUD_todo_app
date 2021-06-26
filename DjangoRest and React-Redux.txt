@@ -1,0 +1,80 @@
+$ pipenv install django djangorestframework
+$ django-admin startproject todocrud 
+
+$ python manage.py startapp todos
+$ python manage.py startapp frontend
+
+todos/
+  api/
+    __init__.py
+    serializers.py
+    urls.py
+    views.py
+
+$ mkdir -p ./frontend/src/{components,actions,reducers}
+$ mkdir -p ./frontend/{static,templates}/frontend
+
+frontend/
+  src/
+    actions/
+    components/
+    reducers/
+  static/
+    frontend/
+  templates/
+    frontend/
+
+$ npm init -y
+$ npm i -D webpack webpack-cli
+$ npm i -D babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/plugin-proposal-class-properties
+$ npm i react react-dom react-router-dom
+$ npm i redux react-redux redux-thunk redux-devtools-extension
+$ npm i redux-form
+$ npm i axios
+$ npm i lodash
+
+// .babelrc
+
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "useBuiltIns": "usage",
+        "corejs": 3
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "plugins": ["@babel/plugin-proposal-class-properties"]
+}
+
+
+// webpack.config.js
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      }
+    ]
+  }
+};
+
+// pakage.json
+"scripts": {
+    "dev": "webpack --mode development --watch ./frontend/src/index.js --output ./frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./frontend/src/index.js --output ./frontend/static/frontend/main.js"
+  },
+
+// frontend/src/index.js
+import App from './components/App';
+
